@@ -59,9 +59,9 @@ router.post("/country", authenticate, async (req, res) => {
       .then(id => {
         db("country")
           .where({ id: id[0] })
-          .first()
           .then(country => {
-            res.status(200).json(country[0]);
+            console.log(country)
+            res.status(200).json(country);
           })
           .catch(err => {
             res.status(500).json(err);
