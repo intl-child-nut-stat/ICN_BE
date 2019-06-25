@@ -28,12 +28,14 @@ router.get("/community", (req, res) => {
         .then(id => {
           console.log(`response  is`, id)
           db("community")
-            .where({ id })
+            .where({ id: id[0] })
             .then(community => {
               console.log(community)
               res.status(200).json(community);
             })
             .catch(err => {
+ //             response  is [ 18 ]
+//I am in catch { error: invalid input syntax for integer: "{"18"}"
               console.log(`I am in catch`, err)
               res.status(500).json(err);
             });
