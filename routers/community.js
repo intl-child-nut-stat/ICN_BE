@@ -26,6 +26,7 @@ router.get("/community", (req, res) => {
         .returning('id')
         .insert(req.body)
         .then(id => {
+          console.log(`response  is`, id)
           db("community")
             .where({ id })
             .then(community => {
