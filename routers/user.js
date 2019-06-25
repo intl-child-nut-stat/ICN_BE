@@ -5,12 +5,8 @@ const jwt = require("jsonwebtoken");
 const secrets = require("../helpers/secrets.js");
 
 
-function errorHandler(err, res) {
-  res.status(500).json({ msg: `error retrieving the data`, err });
-}
 
 router.post("/register", (req, res) => {
-  console.log('i am here')
   let user = req.body;
 
   if (!user.username || !user.password || !user.country_id) {
