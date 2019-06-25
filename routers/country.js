@@ -54,13 +54,14 @@ router.post("/country", authenticate, async (req, res) => {
       res.status(200).json( { error: "Country already exist" } );
     } else {
       db("country")
+      .returning('id')
       .insert(req.body)
-      .then(ids => {
+      .then(id => {
         db("country")
-          .where({ id: ids[0] })
+          .where({ id: id[0] })
           .first()
           .then(country => {
-            res.status(200).json(country);
+            res.status(200).json(country[0]);
           })
           .catch(err => {
             res.status(500).json(err);
