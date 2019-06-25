@@ -23,19 +23,22 @@ router.get("/community", (req, res) => {
         res.status(200).json( { error: "Community already exist" } );
       } else {
         db("community")
+        .returning('id')
         .insert(req.body)
-        .then(ids => {
+        .then(id => {
           db("community")
-            .where({ id: ids[0] })
-            .first()
+            .where({ id })
             .then(community => {
+              console.log(community)
               res.status(200).json(community);
             })
             .catch(err => {
+              console.log(`I am in catch`, err)
               res.status(500).json(err);
             });
         })
         .catch(err => {
+          console.log('I am in error', err)
           res.status(500).json(err);
         });
       }
