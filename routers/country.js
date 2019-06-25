@@ -31,6 +31,19 @@ router.get("/country", (req, res) => {
     });
 });
 
+router.get("/country/:id", authenticate, (req, res) => {
+  const id = req.params.id;
+
+  db("country")
+    .where({ id })
+    .then(country => {
+      res.status(200).json(country);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
 router.post("/country", authenticate, async (req, res) => {
   if (!req.body.country) {
     res.status(400).json({ msg: "Please provide a country" });

@@ -51,6 +51,7 @@ router.post("/login", (req, res) => {
         res.status(200).json({
           userId: user.id,
           isAdmin: user.isAdmin,
+          countryId: user.country_id,
           token
         });
       } else {
