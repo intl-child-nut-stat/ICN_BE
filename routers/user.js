@@ -27,9 +27,9 @@ router.post("/register",async (req, res) => {
       .then(saved => {
         console.log(`the result is`, saved)
         res.status(201).json({
-          id: saved.id,
-          isAdmin: saved.isAdmin,
-          username: saved.username
+          id: saved[0].id,
+          isAdmin: saved[0].isAdmin,
+          username: saved[0].username
         });
       })
       .catch(error => {
