@@ -19,25 +19,25 @@ router.post("/register",async (req, res) => {
     
   if (foundUser) { 
       res.status(200).json( { error: "User already exist" } );
-  }
-
-  const hash = bcrypt.hashSync(user.password, 10);
-  user.password = hash;
-
-  Users.add(user)
-    .then(saved => {
-      console.log(saved)
-      res.status(201).json({
-        id: saved.id,
-        isAdmin: saved.isAdmin,
-        username: saved.username
+  } else {
+    const hash = bcrypt.hashSync(user.password, 10);
+    user.password = hash;
+  
+    Users.add(user)
+      .then(saved => {
+        console.log(saved)
+        res.status(201).json({
+          id: saved.id,
+          isAdmin: saved.isAdmin,
+          username: saved.username
+        });
+      })
+      .catch(error => {
+        console.log('i am here ', error)
+        console.error(error);
+        res.status(500).json(error);
       });
-    })
-    .catch(error => {
-      console.log('i am here ', error)
-      console.error(error);
-      res.status(500).json(error);
-    });
+  }
 });
 
 router.post("/login", (req, res) => {
