@@ -20,9 +20,9 @@ server.use(
     secret: 'nobody tosses a dwarf!',
     cookie: {
       maxAge: 1 * 24 * 60 * 60 * 1000,
-      secure: true, // only set cookies over https. Server will not send back a cookie over http.
-    }, // 1 day in milliseconds
-    httpOnly: true, // don't let JS code access cookies. Browser extensions run JS code on your browser!
+      secure: true, 
+    }, 
+    httpOnly: true, 
     resave: false,
     saveUninitialized: false,
   })
@@ -31,7 +31,7 @@ server.use(
 
 server.use("/user", userRouter);
 server.use("/api",countryRouter);
-server.use("./api", communityRouter);
+server.use("/api", communityRouter);
 
 server.get("/", (req, res) => {
   res.status(200).json({ api: "Server is up" });
