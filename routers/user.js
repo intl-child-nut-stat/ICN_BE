@@ -6,7 +6,7 @@ const secrets = require("../helpers/secrets.js");
 
 
 
-router.post("/register", (req, res) => {
+router.post("/register",async (req, res) => {
   let user = req.body;
 
   if (!user.username || !user.password || !user.country_id) {
@@ -15,11 +15,12 @@ router.post("/register", (req, res) => {
     });
   }
 
-  Users.findBy({ username: user.username }).then(user => {
-    if (user.length) {
-      res.status(200).json({ error: "User already exist" });
-    }
-  });
+  let foundUser = await Users.findBy( { username: user.username } ).first();
+    
+  if (foundUser) { 
+      res.status(200).json( { error: "User already exist" } );
+  }
+
   const hash = bcrypt.hashSync(user.password, 10);
   user.password = hash;
 
