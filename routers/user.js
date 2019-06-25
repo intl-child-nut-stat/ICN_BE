@@ -25,7 +25,6 @@ router.post("/register",async (req, res) => {
   
     Users.add(user)
       .then(saved => {
-        console.log(saved)
         res.status(201).json({
           id: saved.id,
           isAdmin: saved.isAdmin,
@@ -33,8 +32,6 @@ router.post("/register",async (req, res) => {
         });
       })
       .catch(error => {
-        console.log('i am here ', error)
-        console.error(error);
         res.status(500).json(error);
       });
   }
