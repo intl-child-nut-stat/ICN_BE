@@ -9,7 +9,7 @@ const secrets = require("../helpers/secrets.js");
 router.post("/register",async (req, res) => {
   let user = req.body;
 
-  if (!user.username || !user.password || !user.country_id) {
+  if ((!user.username && !user.password) && (!user.country_id || defined (user.isAdmin))) {
     res.status(404).json({
       error: "You need to send username, password and isAdmin/country_id"
     });
@@ -25,7 +25,6 @@ router.post("/register",async (req, res) => {
   
     Users.add(user)
       .then(saved => {
-        console.log(`the result is`, saved)
         res.status(201).json({
           id: saved[0].id,
           isAdmin: saved[0].isAdmin,
