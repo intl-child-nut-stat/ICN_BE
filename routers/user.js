@@ -6,6 +6,7 @@ const secrets = require("../helpers/secrets.js");
 
 
 
+
 router.post("/register",async (req, res) => {
   let user = req.body;
 
@@ -73,16 +74,7 @@ router.get('/logout', (req, res) => {
   }
 });
 
-// router.get("/:id", authenticate,(req, res) => {
-//   console.log("i am here");
-//   try {
-//     const { id } = req.params;
-//     const user =  Users.getById(id);
-//     return res.status(200).json(user);
-//   } catch (err) {
-//     return errorHandler(err, res);
-//   }
-// });
+
 
 function generateToken(user) {
   const payload = {

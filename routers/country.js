@@ -1,9 +1,11 @@
 const router = require("express").Router();
 
+const { authenticate } = require("../auth/authentication.js");
+
 
 const db = require("../data/dbconfig.js");
 
-router.get("/countrylist", (req, res) => {
+router.get("/countrylist" ,(req, res) => {
   db("country")
     .then(country => {
       res.status(200).json(country);
@@ -29,15 +31,18 @@ router.get("/country", (req, res) => {
     });
 });
 
-router.post("/country", (req, res) => {
+router.post("/country", authenticate, async (req, res) => {
   if (!req.body.country) {
     res.status(400).json({ msg: "Please provide a country" });
   } else {
+    let country = await db("country").where({ country: req.body.country } ).first();
 
-    db("country")
+    if (country) {
+      res.status(200).json( { error: "Country already exist" } );
+    } else {
+      db("country")
       .insert(req.body)
       .then(ids => {
-        console.log(ids);
         db("country")
           .where({ id: ids[0] })
           .first()
@@ -52,6 +57,7 @@ router.post("/country", (req, res) => {
           console.log('I am in error', err)
         res.status(500).json(err);
       });
+    }
   }
 });
 
