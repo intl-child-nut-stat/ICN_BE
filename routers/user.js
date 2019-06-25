@@ -25,6 +25,7 @@ router.post("/register",async (req, res) => {
   
     Users.add(user)
       .then(saved => {
+        console.log(`the result is`, saved)
         res.status(201).json({
           id: saved.id,
           isAdmin: saved.isAdmin,
