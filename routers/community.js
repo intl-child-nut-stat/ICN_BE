@@ -3,7 +3,6 @@ const router = require("express").Router();
 const db = require("../data/dbconfig.js");
 
 router.get("/community", (req, res) => {
-    console.log("i am here");
     db("community")
       .then(community => {
         res.status(200).json(community);
@@ -22,6 +21,7 @@ router.get("/community", (req, res) => {
       if (community) {
         res.status(200).json( { error: "Community already exist" } );
       } else {
+        
         db("community")
         .returning('id')
         .insert(req.body)
