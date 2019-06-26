@@ -2,10 +2,9 @@ const router = require("express").Router();
 
 const { authenticate } = require("../auth/authentication.js");
 
-
 const db = require("../data/dbconfig.js");
 
-router.get("/countrylist" ,(req, res) => {
+router.get("/countrylist", (req, res) => {
   db("country")
     .then(country => {
       res.status(200).json(country);
@@ -22,7 +21,7 @@ router.get("/country", (req, res) => {
     filter.id = req.session.user.country_id;
   }
   db("country")
-    .where({filter})
+    .where({ filter })
     .then(country => {
       res.status(200).json(country);
     })
@@ -48,31 +47,54 @@ router.post("/country", authenticate, async (req, res) => {
   if (!req.body.country) {
     res.status(400).json({ msg: "Please provide a country" });
   } else {
-    let country = await db("country").where({ country: req.body.country } ).first();
+    let country = await db("country")
+      .where({ country: req.body.country })
+      .first();
 
     if (country) {
-      res.status(200).json( { error: "Country already exist" } );
+      res.status(200).json({ error: "Country already exist" });
     } else {
       db("country")
-      .returning('id')
-      .insert(req.body)
-      .then(id => {
-        db("country")
-          .where({ id: id[0] })
-          .then(country => {
-            console.log(country)
-            res.status(200).json(country);
-          })
-          .catch(err => {
-            res.status(500).json(err);
-          });
-      })
-      .catch(err => {
-          console.log('I am in error', err)
-        res.status(500).json(err);
-      });
+        .returning("id")
+        .insert(req.body)
+        .then(id => {
+          db("country")
+            .where({ id: id[0] })
+            .then(country => {
+              console.log(country);
+              res.status(200).json(country);
+            })
+            .catch(err => {
+              res.status(500).json(err);
+            });
+        })
+        .catch(err => {
+          console.log("I am in error", err);
+          res.status(500).json(err);
+        });
     }
   }
+});
+
+router.delete("/country/:id", (req, res) => {
+  const countryid = req.params.id;
+  db("country")
+    .where({ id: countryid })
+    .del()
+    .then(count => {
+      if (count > 0) {
+        res.status(200).json({
+          message: `${count} ${count > 1 ? "records" : "record"} deleted`
+        });
+      } else {
+        res.status(400).json({ message: "no such community exists" });
+      }
+    })
+
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 module.exports = router;
