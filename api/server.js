@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const userRouter = require("../routers/user.js");
 const countryRouter = require("../routers/country.js");
 const communityRouter = require("../routers/community.js");
+const childrenRouter = require("../routers/children.js")
 const session = require('express-session');
 
 server.use(express.json());
@@ -32,6 +33,7 @@ server.use(
 server.use("/user", userRouter);
 server.use("/api",countryRouter);
 server.use("/api", communityRouter);
+server.use("/api", childrenRouter);
 
 server.get("/", (req, res) => {
   res.status(200).json({ api: "Server is up" });
