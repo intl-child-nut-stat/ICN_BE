@@ -1,6 +1,18 @@
 const router = require("express").Router();
 const db = require("../data/dbconfig.js");
 
+router.get("/screening/:children_id", (req, res) => {
+    db("screening")
+    .where({ children_id: req.params.children_id })
+    .then(screening => {
+        res.status(200).json(screening);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
+
 
 router.get("/screening" ,(req, res) => {
     db("screening")
