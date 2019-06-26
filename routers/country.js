@@ -15,13 +15,7 @@ router.get("/countrylist", (req, res) => {
 });
 
 router.get("/country", (req, res) => {
-  const isAdmin = req.session.user.isAdmin;
-  const filter = {};
-  if (!isAdmin) {
-    filter.id = req.session.user.country_id;
-  }
   db("country")
-    .where({ filter })
     .then(country => {
       res.status(200).json(country);
     })
