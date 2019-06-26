@@ -21,6 +21,7 @@ router.get("/community", (req, res) => {
       if (community) {
         res.status(200).json( { error: "Community already exist" } );
       } else {
+        
         db("community")
         .returning('id')
         .insert(req.body)
