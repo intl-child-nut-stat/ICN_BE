@@ -50,6 +50,27 @@ router.post("/screening", async (req, res) => {
   }
 });
 
+router.delete("/screening/:id", (req, res) => {
+  const screenid = req.params.id;
+  db("screening")
+    .where({ id: screenid })
+    .del()
+    .then(count => {
+      if (count > 0) {
+        res.status(200).json({
+          message: `${count} ${count > 1 ? "records" : "record"} deleted`
+        });
+      } else {
+        res.status(400).json({ message: "No such screening exists" });
+      }
+    })
+
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
 
 
 module.exports = router;

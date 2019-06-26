@@ -70,7 +70,7 @@ router.delete("/community/:id", (req, res) => {
           message: `${count} ${count > 1 ? "records" : "record"} deleted`
         });
       } else {
-        res.status(400).json({ message: "no such community exists" });
+        res.status(400).json({ message: "No such community exists" });
       }
     })
 

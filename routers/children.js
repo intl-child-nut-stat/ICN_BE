@@ -47,4 +47,25 @@ router.post("/children", async (req, res) => {
   }
 });
 
+router.delete("/children/:id", (req, res) => {
+  const childrenid = req.params.id;
+  db("children")
+    .where({ id: childrenid })
+    .del()
+    .then(count => {
+      if (count > 0) {
+        res.status(200).json({
+          message: `${count} ${count > 1 ? "records" : "record"} deleted`
+        });
+      } else {
+        res.status(400).json({ message: "No such children exists" });
+      }
+    })
+
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
 module.exports = router;
