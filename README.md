@@ -19,7 +19,9 @@ npm test
 
 ## Endpoints
 user/register -> name, username,password,country_id -> String integer
+
 user/login -> post -> username, password -> string
+
 api/countrylist -> country -> string
 api/country/:id -> get country by id
 api/country/:id -> update
