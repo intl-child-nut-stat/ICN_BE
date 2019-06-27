@@ -12,7 +12,7 @@ exports.up = function(knex, Promise) {
       .unsigned()
       .notNullable()
       .references("id")
-      .inTable("community")
+      .inTable("children")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
   });
