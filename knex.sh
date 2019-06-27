@@ -1,0 +1,4 @@
+#!/bin/bash
+./node_modules/.bin/knex migrate:rollback
+./node_modules/.bin/knex migrate:latest
+./node_modules/.bin/knex seed:run
