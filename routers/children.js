@@ -68,4 +68,22 @@ router.delete("/children/:id", (req, res) => {
     });
 });
 
+router.put("/children/:id", (req, res) => {
+  db("children")
+    .where({ id: req.params.id })
+    .update(req.body)
+    .then(count => {
+      if (count > 0) {
+        res.status(200).json({
+          message: `${count} ${count > 1 ? "children" : "children"} updated`
+        });
+      } else {
+        res.status(400).json({ message: "no such children exists" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
 module.exports = router;

@@ -80,4 +80,22 @@ router.delete("/community/:id", (req, res) => {
     });
 });
 
+router.put("/community/:id", (req, res) => {
+  db("community")
+    .where({ id: req.params.id })
+    .update(req.body)
+    .then(count => {
+      if (count > 0) {
+        res.status(200).json({
+          message: `${count} ${count > 1 ? "community" : "community"} updated`
+        });
+      } else {
+        res.status(400).json({ message: "no such community exists" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
 module.exports = router;

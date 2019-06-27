@@ -91,4 +91,23 @@ router.delete("/country/:id", (req, res) => {
     });
 });
 
+router.put("/country/:id", (req, res) => {
+  db("country")
+    .where({ id: req.params.id })
+    .update(req.body)
+    .then(count => {
+      if (count > 0) {
+        res.status(200).json({
+          message: `${count} ${count > 1 ? "country" : "country"} updated`
+        });
+      } else {
+        res.status(400).json({ message: "no such country exists" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+
 module.exports = router;
