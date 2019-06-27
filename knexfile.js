@@ -1,4 +1,16 @@
 // Update with your config settings.
+require('dotenv').config();
+
+const DATABASE_URL = process.env.DATABASE_URL
+let d = {
+  'user' : 1,
+  'password': 2,
+  'host': 3,
+  'port': 4,
+  'database': 5
+}
+let re = /postgres\:\/\/(\w+)\:([a-z0-9]+)@([^:]+)\:(\d+)\/(\w+)/g
+let a = re.exec(DATABASE_URL)
 
 module.exports = {
   development: {
@@ -29,16 +41,23 @@ module.exports = {
     },
   },
 
-
   production: {
     client: 'pg',
-    connection: process.env.DATABASE_URL,
+    connection: {
+      user: a[d.user],
+      password: a[d.password],
+      database: a[d.database],
+      host: a[d.host],
+      port: a[d.port],
+      ssl: true
+    },
+    searchPath: ['knex', 'public'],
+    useNullAsDefault: true,
     migrations: {
       directory: './data/migrations',
     },
     seeds: {
-      directory: './data/seeds',
-    },
+      directory: './data/seeds'
+    }
   }
-
 };
