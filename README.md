@@ -3,18 +3,18 @@ Manju KC
 
 ##Technologies
 
-##Production
+## Production
 Node.js, Express Knex SQLite Postgres Bcrypt Cors JSON Web Token
 
-##Development
+## Development
 Cross Env Jest Nodemon Supertest
 
-##Set Up
+## Set Up
 git clone(repository)
 npm install dependencies and dev-dependencies
 npm server/start
 
-##Testing
+## Testing
 npm test
 
 ## Endpoints
