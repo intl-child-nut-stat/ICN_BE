@@ -5,7 +5,10 @@ exports.seed = function(knex, Promise) {
       return knex("country").insert([
         { country: "Japan" },
         { country: "Argentina" },
-        { country: "Angola" }
+        { country: "Angola" },
+        { country: "Nepal" },
+        { country: "USA" }
       ]);
     });
 };
+
