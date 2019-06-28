@@ -5,8 +5,8 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       return knex('community').insert([
         {community:"yokohama", country_id:1},
-        {community:"sangai", country:2},
-        {community:"saringo", country:3}
+        {community:"sangai", country_id:2},
+        {community:"saringo", country_id:3}
       ]);
     });
 };
